@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  username String @unique
+  email String @unique
+  password String
+  sessionToken String?
+  img String?
+  country String
+  phone String?
+  desc String?
+  isSeller Boolean @default(false)
+  createAt DateTime @default(now()) @map("create_At")
+  updateAt DateTime @updatedAt @map("update_at")
+
+  @@map("users")
+}
+
+model Gig {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String[]
+  title String
+  desc String
+  totalStars Int @default(0)
+  starNumber Int
+  category String
+  price Int
+  cover String
+  images String[]
+  shortTitle String
+  shortDesc String
+  deliveryTime Int
+  revisionNumber Int
+  features String[]
+  sales Int @default(0)
+
+  @@map("gigs")
+}
+
+model Order {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  gigId String
+  img String?
+  title String
+  price Float
+  sellerId String
+  buyerId String
+  isCompleted Boolean @default(false)
+  payment_intent String
+
+  @@map("orders")
+}
+
+model Conversation {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  sellerId String
+  buyerId String
+  readBySeller Boolean @default(false)
+  readByBuyer Boolean @default(false)
+  lastMessage String?
+
+  @@map("conversations")
+}
+
+model Message {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String
+  desc String
+
+  @@map("messages")
+}
+
+
+model Review {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  gigId String
+  userId String
+  star Int
+  desc String
+
+  @@map("reviews")
+}
