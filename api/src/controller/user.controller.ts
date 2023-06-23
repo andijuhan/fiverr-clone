@@ -1,13 +1,14 @@
 import express from 'express';
 import prisma from '../utils/prisma';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { get } from 'lodash';
 
 export const deleteUser = async (
    req: express.Request,
    res: express.Response
 ) => {
-   //check user id from req
-   const userId = req.params.id;
+   //check  user id from identity object in request
+   const userId = get(req, 'identity.id');
 
    //check is user id empty
    if (!userId) {

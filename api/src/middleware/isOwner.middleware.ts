@@ -1,6 +1,7 @@
 import express from 'express';
 import { validateSessionToken } from '../helper';
 import prisma from '../utils/prisma';
+import { merge } from 'lodash';
 
 //this moddleware to verify is request come from data owner
 
@@ -43,6 +44,9 @@ export default async (
       if (currentUser.sessionToken !== token) {
          return res.status(401).json({ message: 'You are not authenticated' });
       }
+
+      //add objec identity to req
+      merge(req, { identity: currentUser });
 
       next();
    } catch (error) {
