@@ -2,8 +2,11 @@ import jwt, { Secret } from 'jsonwebtoken';
 
 const secretKey: Secret = 'ini-sangat-rahasia';
 
-export const createSessionToken = (userId: string): string => {
-   const payload = { userId };
+export const createSessionToken = (
+   userId: string,
+   isSeller: boolean
+): string => {
+   const payload = { userId, isSeller };
 
    const option = {
       expiresIn: '1d',

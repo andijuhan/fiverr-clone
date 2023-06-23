@@ -1,6 +1,7 @@
 import express from 'express';
-import { getAllUsers } from '../controller/user.controller';
+import { deleteUser } from '../controller/user.controller';
+import isOwnerMiddleware from '../middleware/isowner.middleware';
 
 export default (router: express.Router) => {
-   router.get('/users', getAllUsers);
+   router.delete('/user/:id', isOwnerMiddleware, deleteUser);
 };

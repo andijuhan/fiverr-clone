@@ -66,7 +66,7 @@ export const login = async (req: express.Request, res: express.Response) => {
       }
 
       //create session token
-      const sessionToken = createSessionToken(user.email);
+      const sessionToken = createSessionToken(user.email, user.isSeller);
 
       //save session token to db
       await prisma.user.update({
@@ -79,7 +79,7 @@ export const login = async (req: express.Request, res: express.Response) => {
       });
 
       //attach token with res cookie
-      res.cookie('token', sessionToken, {
+      res.cookie('accessToken', sessionToken, {
          domain: 'localhost',
          path: '/',
          httpOnly: true,
