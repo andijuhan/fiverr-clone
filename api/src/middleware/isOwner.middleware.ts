@@ -3,7 +3,6 @@ import { validateSessionToken } from '../helper';
 import prisma from '../utils/prisma';
 import { merge } from 'lodash';
 import createHttpError from 'http-errors';
-import errorHandle from './errorHandler.middleware';
 
 //this moddleware to verify is request come from data owner
 
@@ -55,6 +54,6 @@ export default async (
 
       next();
    } catch (error) {
-      errorHandle(error, req, res, next);
+      next(error);
    }
 };

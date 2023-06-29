@@ -111,6 +111,12 @@ export const logout = async (
    next: express.NextFunction
 ) => {
    try {
+      res.clearCookie('accessToken', {
+         sameSite: 'none',
+         secure: true,
+      });
+
+      return res.status(200).json({ message: 'User has been loged out' });
    } catch (error) {
       next(error);
    }
